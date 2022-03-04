@@ -20,11 +20,9 @@ client.once('ready', () => {
 	})
 });
 
-
+//register commands
 
 const commands = Object(commandModules);
-
-//register commands
 const clientId = '948653319872716811';
 const guildId = '734102166259892234';
 const commandDescriptions = [];
