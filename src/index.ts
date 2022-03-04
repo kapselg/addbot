@@ -1,17 +1,19 @@
 require("dotenv").config();
 import { REST } from '@discordjs/rest';
 import { InteractionType, Routes } from 'discord-api-types/v9';
-const {Client} = require("discord.js");
-import { CommandInteraction, Interaction, Intents, Collection } from 'discord.js';
+import { CommandInteraction, Interaction, Intents, Collection, Client } from 'discord.js';
 import fs from "fs";
 import * as commandModules from './commands/commands';
+import { update } from './events/richPresence';
 
-
-
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+const mckey = process.env.MCAPI_KEY || "error"
+const mcapi = "http://" + process.env.MCAPI_URL + ":4567/v1";
+const client: Client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
 client.once('ready', () => {
   console.log(`Logged in as ${client.user?.tag}!`);
+	update();
+	setInterval(update, 10000);
 	client.on("interactionCreate", async (interaction: Interaction)=>{
 		if(!interaction.isCommand()) return;
 		
@@ -49,4 +51,4 @@ const rest = new REST({ version: '9' }).setToken(process.env.DISCORD_TOKEN!);
 
 client.login(process.env.DISCORD_TOKEN);
 
-export {rest, client};
+export {rest, client, mcapi, mckey};

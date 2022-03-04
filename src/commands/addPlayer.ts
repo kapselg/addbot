@@ -54,7 +54,5 @@ export async function execute(interaction: CommandInteraction) {
     case "info":
       //code for info
       break;
-    default:
-      break;
   }
 }
