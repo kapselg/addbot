@@ -1,7 +1,9 @@
 const { Model, Sequelize, DataTypes } = require("sequelize/types");
 const sql = new Sequelize('sqlite::memory');
-/** @type {REST} */
+
 const drest = require("../index").rest;
+
+
 class User extends Model{}
 User.init({
   dusername: DataTypes.STRING, //discord username
@@ -12,4 +14,7 @@ User.init({
 
 User.addUser = async function(did, mcname){
   //get discord name from api
-  
+  await drest.
+  //get minecraft uuid from api
+  //add new user to db
+}
