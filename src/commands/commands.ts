@@ -1,2 +1,3 @@
 export * as ping from "./ping";
-export * as addplayer from "./addPlayer";
+export * as player from "./player";
+export * as checkadmin from "./checkAdmin";

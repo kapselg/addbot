@@ -1,11 +1,14 @@
+//model types
+
+//query requirements
 export interface addQuery{
   did: string,
-  mcname: string,
+  mcusername: string,
   guild: string
 }
 
 export interface findQuery{
-  did: string | undefined,
-  mcname: string | undefined,
+  did?: string,
+  mcusername?: string,
   guild: string
 }

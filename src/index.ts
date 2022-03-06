@@ -4,14 +4,17 @@ import { InteractionType, Routes } from 'discord-api-types/v9';
 import { CommandInteraction, Interaction, Intents, Collection, Client } from 'discord.js';
 import fs from "fs";
 import * as commandModules from './commands/commands';
+import { initDB } from './database/config/dbconfig';
 import { update } from './events/richPresence';
 
+const minTime = new Date(<number> <unknown>process.env.MINIMUM_TIME * 1000);
 const mckey = process.env.MCAPI_KEY || "error"
 const mcapi = "http://" + process.env.MCAPI_URL + ":4567/v1";
 const client: Client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
 client.once('ready', () => {
   console.log(`Logged in as ${client.user?.tag}!`);
+	initDB();
 	update();
 	setInterval(update, 10000);
 	client.on("interactionCreate", async (interaction: Interaction)=>{
@@ -51,4 +54,4 @@ const rest = new REST({ version: '9' }).setToken(process.env.DISCORD_TOKEN!);
 
 client.login(process.env.DISCORD_TOKEN);
 
-export {rest, client, mcapi, mckey};
+export {rest, client, mcapi, mckey, minTime};

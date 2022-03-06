@@ -30,9 +30,7 @@ export async function update(){
     ]
     })
     
-  }catch(e){
-    console.log(e);
-    
+  }catch(e){    
     client.user?.setPresence({activities: [{name: "Server offline"}], status: "dnd"});
     return
   } 

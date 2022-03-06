@@ -1,24 +1,34 @@
-import { DataTypes } from "sequelize/types";
-import { Sequelize } from "sequelize/types/sequelize";
+import { DataTypes, Model, Sequelize } from "sequelize";
+import { sequelize } from "../config/dbconfig";
 import { findQuery } from "./interfaces";
-import { Player } from "./Player";
 
-const sequelize = new Sequelize('sqlite::memory')
+class Admin extends Model{}
 
-
-
-export class Admin extends Player{}
-Admin.init({
-  dusername: { type: DataTypes.STRING, allowNull: false}, //discord username
-  mcusername: {type: DataTypes.STRING, unique: true, allowNull: false}, //minecraft username
-  uuid: {type: DataTypes.STRING, unique: true, allowNull: false}, //minecraft UUID
-  did: {type: DataTypes.STRING, unique: true, allowNull: false } //discord user id
-}, {sequelize, modelName: 'user'});
+export function initialize(sequelize: Sequelize){
+  Admin.init({
+    dusername: { type: DataTypes.STRING, allowNull: false}, //discord username
+    mcusername: {type: DataTypes.STRING, allowNull: false}, //minecraft username
+    uuid: {type: DataTypes.STRING, unique: true, allowNull: false, primaryKey: true}, //minecraft UUID
+    did: {type: DataTypes.STRING, unique: true, allowNull: false, primaryKey: true}, //discord user id
+    adminScope: {type: DataTypes.ENUM('discord', 'minecraft', 'both')}
+  }, {sequelize, modelName: "admin"})
+}
 
 export async function isAdmin(options: findQuery){
-  if(typeof options.mcname !== undefined){
+  if(options.mcusername){
+    console.log("checking by username");
+    
     const result = await Admin.findAll({where: {
-      mcusername: options.mcname
+      mcusername: options.mcusername
     }})
+    if(result.length>0) return true;
+  }else{
+    console.log("checking by did");
+
+    const result = await Admin.findAll({where: {
+      did: options.did
+    }})
+    if(result.length>0) return true;
   }
+  return false;
 }
