@@ -10,5 +10,5 @@ export const sequelize = new Sequelize({
 export async function initDB() {
   Admin.initialize(sequelize);
   Player.initialize(sequelize);
-  sequelize.sync();
+  sequelize.sync({force: true});
 }

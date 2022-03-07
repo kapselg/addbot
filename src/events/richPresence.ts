@@ -17,9 +17,7 @@ export async function update(){
       client.user?.setPresence({activities: [{name: "Server offline"}], status: "dnd"});
       return
     }
-
     const tps: {data: string} = await sendCommand("tps");
-    
     client.user?.setPresence({
       status: "online",
       activities: [
