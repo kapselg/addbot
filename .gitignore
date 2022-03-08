@@ -1,4 +1,5 @@
 db.sqlite
+*.todo
 # Logs
 logs
 *.log
