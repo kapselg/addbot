@@ -5,10 +5,11 @@ import { Sequelize } from "sequelize";
 export const sequelize = new Sequelize({
   dialect: "sqlite",
   storage: "./db.sqlite",
-  logging: false,
+  logging: false
 });
+
 export async function initDB() {
   Admin.initialize(sequelize);
   Player.initialize(sequelize);
-  sequelize.sync({force: true});
+  sequelize.sync();
 }

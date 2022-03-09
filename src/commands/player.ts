@@ -9,6 +9,9 @@ import Player from "../database/models/Player";
 import { client, minTime } from "..";
 import { javaHash } from "../utils/uuidHash";
 import { isAdmin } from "../database/models/Admin";
+import { InferAttributes } from "sequelize/types";
+import { player } from "./commands";
+import { addPlayer, removePlayer } from "../utils/mcCommands";
 
 export const data = new SlashCommandBuilder()
   .setName("player")
@@ -64,73 +67,88 @@ export async function execute(interaction: CommandInteraction) {
     );
     const now = new Date().valueOf();
     switch (interaction.options.getSubcommand(true)) {
-
       //add player to db and whitelist
       case "add":
         //check time on server
         if (now - joinDate < minTime.valueOf() && interaction.user.system) {
           interaction.reply("🕔 You are on this server for not long enough ");
+          return;
         }
         //this command option is required
-        if (
-          await Player.create({
-            did: interaction.user.id,
-            guild: interaction.user.id,
-            mcusername: interaction.options.getString("nickname")!,
-            dusername: interaction.user.username,
-            uuid: javaHash(interaction.options.getString("nickname")!),
-          })
-        ) {
+        const playerInfo = {
+          did: interaction.user.id,
+          guild: interaction.guildId!,
+          mcusername: interaction.options.getString("nickname")!,
+          dusername: interaction.user.username,
+          uuid: javaHash(interaction.options.getString("nickname")!),
+        };
+        const result = await Player.findOrCreate({
+          where: { did: playerInfo.did, guild: playerInfo.guild },
+          defaults: playerInfo,
+        });
+        if (result[1]) {
+          addPlayer(result[0].mcusername);
           interaction.reply("🥳 Sucessfully linked your accounts");
         } else {
           interaction.reply("✅ You already are in the database");
         }
-        break;
 
+        break;
 
       //remove player from db and whitelist
       case "remove":
-        const playerName = interaction.options.getString("mcusername");
-        if (playerName) {
-          //check if sender wants to remove himself
-
-          const player = await Player.findOne({
-            where: {
-              mcusername: playerName,
-              guild: interaction.guildId,
-              did: interaction.guildId,
-            },
-          });
-          if (player)
-            if (javaHash(playerName) == player!.uuid) {
-              //sender removing himself
-              player.destroy();
-
-            } else {
-              //sender removing another player
-              //check if sender is admin
-              if (await isAdmin(player)) {
-                player.destroy();
-              }
-              return "You are not authorized to remove other players";
-            }
-        } else {
-          console.log("nope");
-        }
-        const remUser = await Player.destroy({
+        const playerNameArg = interaction.options.getString("nickname");
+        const sendersPlayer = await Player.findOne({
           where: {
             did: interaction.user.id,
-
+            guild: interaction.guildId,
           },
         });
-        if (remUser > 0) {
-          //removed user
-          return "✅ You have been removed";
+        if (playerNameArg) {
+          //check if sender provided username is in the database
+
+          
+
+          if (!sendersPlayer)
+            return interaction.reply("No such player in the database");
+
+          if (playerNameArg == sendersPlayer.mcusername) {
+
+            //sender removing himself
+
+            sendersPlayer.destroy();
+            removePlayer(playerNameArg);
+            //TODO: add confirmation
+            return interaction.reply("✅ Your accounts have been unlinked");
+          }
+
+          //sender removing another player
+          //check if sender is admin
+
+          if (await isAdmin(sendersPlayer)) {
+            sendersPlayer.destroy();
+            removePlayer(sendersPlayer.mcusername);
+            return interaction.reply(
+              sendersPlayer.mcusername + " accounts have been unlinked"
+            );
+          } else {
+            return interaction.reply(
+              "No permission to unlink another players' accounts!"
+            );
+          }
         } else {
-          //no such user
-          return "You are not registered yet";
+          //no
+          if (sendersPlayer) {
+            //remove user
+            await sendersPlayer?.destroy();
+            removePlayer(sendersPlayer.mcusername);
+            return interaction.reply("✅ Your accounts have been unlinked");
+          } else {
+            //no such user
+            return interaction.reply("Your accounts are not linked yet!");
+          }
         }
-        break;
+
       case "info":
         //code for info
         break;

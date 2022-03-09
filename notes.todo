@@ -1,8 +1,9 @@
-☐ https://stackoverflow.com/questions/62577866/discord-js-listening-for-kicks wyrzucenia
+✔ https://stackoverflow.com/questions/62577866/discord-js-listening-for-kicks wyrzucenia @done(22-03-08 23:57)
 ✔ bot status (player count, is server on) @done(22-03-04 19:23)
 ✔ database connection for linking discord account with minecraft player @done(22-03-08 00:21)
 ☐ add admin types
 ☐ kick/ban action
 ☐ booster rewards (?)
+☐ add queueing of commands sent to offline server
 ☐ add support for multiple databases (link guildid with minecraft server)
 ☐ add support for online servers (premium)

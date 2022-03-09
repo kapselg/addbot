@@ -15,22 +15,24 @@ export async function update(){
 
     if(playerCount.status != 200){
       client.user?.setPresence({activities: [{name: "Server offline"}], status: "dnd"});
-      return
+      return false
     }
     const tps: {data: string} = await sendCommand("tps");
     client.user?.setPresence({
       status: "online",
       activities: [
         {name: playerCount.data.length + 
-        " players online with " + 
+        " players online @ " + 
         tps.data.substring(27, tps.data.indexOf(",", 27)) 
         + " TPS on bffmc.csrv.pl", type: "PLAYING"}
+        
     ]
     })
+    return true
     
   }catch(e){    
     client.user?.setPresence({activities: [{name: "Server offline"}], status: "dnd"});
-    return
+    return false
   } 
 }
 

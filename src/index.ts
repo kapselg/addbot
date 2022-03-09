@@ -5,24 +5,28 @@ import { CommandInteraction, Interaction, Intents, Collection, Client } from 'di
 import fs from "fs";
 import * as commandModules from './commands/commands';
 import { initDB } from './database/config/dbconfig';
+import handleKickBan from './events/handleKickBan';
 import { update } from './events/richPresence';
 
 const minTime = new Date(<number> <unknown>process.env.MINIMUM_TIME * 1000);
 const mckey = process.env.MCAPI_KEY || "error"
 const mcapi = "http://" + process.env.MCAPI_URL + ":4567/v1";
 const client: Client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+let serverStatus: boolean;
 
-client.once('ready', () => {
+client.once('ready', async() => {
   console.log(`Logged in as ${client.user?.tag}!`);
 	initDB();
-	update();
-	setInterval(update, 10000);
-	client.on("interactionCreate", async (interaction: Interaction)=>{
-		if(!interaction.isCommand()) return;
-		
-		 commands[interaction.commandName].execute(interaction);
-	
-	})
+	serverStatus = await update();
+	setInterval(async()=>{serverStatus = await update()}, 10000);
+	if(serverStatus){
+		client.on("interactionCreate", async (interaction: Interaction)=>{
+			if(!interaction.isCommand()) return;
+			
+			 commands[interaction.commandName].execute(interaction);
+		})
+		client.on("guildMemberRemove", handleKickBan);
+	}
 });
 
 //register commands
