@@ -1,6 +1,8 @@
 import { Collection, Interaction, SnowflakeUtil } from "discord.js";
 
-
+/**
+ * Manager of all guilds' queues
+ */
 class QueueManager {
   private guildList: Map<string, GuildQueue> = new Map();
 

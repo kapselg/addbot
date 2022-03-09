@@ -66,7 +66,7 @@
     "@types/node" "*"
     form-data "^3.0.0"
 
-"@types/node@*":
+"@types/node@*", "@types/node@^17.0.21":
   version "17.0.21"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.21.tgz#864b987c0c68d07b4345845c3e63b75edd143644"
   integrity sha512-DBZCJbhII3r90XbQxI8Y9IjjiiOGlZ0Hr32omXIZvwwZ7p4DMMXGrKXVyPfuoBOri9XNtL0UK69jYIBIsRX3QQ==
@@ -285,11 +285,6 @@ core-util-is@~1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.3.tgz#a6042d3634c2b27e9328f837b965fac83808db85"
   integrity sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==
-
-crypto-js@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.npmjs.org/crypto-js/-/crypto-js-4.1.1.tgz"
-  integrity sha512-o2JlM7ydqd3Qk9CA0L4NL6mTzU2sdx96a+oOfPu8Mkl/PK51vSyoi8/rQ8NknZtk44vq15lmhAj9CIAGwgeWKw==
 
 d@1, d@^1.0.1:
   version "1.0.1"
@@ -589,7 +584,7 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-glob@^7.0.3, glob@^7.1.3:
+glob@7.2.0, glob@^7.0.3, glob@^7.1.3:
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.2.0.tgz#d15535af7732e02e948f4c41628bd910293f6023"
   integrity sha512-lmLf6gtyrPq8tTjSmrO94wBeQbFR3HbLHbuyD69wuyQkImp2hWqMGB47OX65FBkPffO641IP9jWa1z4ivqG26Q==
@@ -730,16 +725,6 @@ js-beautify@^1.14.0:
     editorconfig "^0.15.3"
     glob "^7.1.3"
     nopt "^5.0.0"
-
-js-md5@^0.7.3:
-  version "0.7.3"
-  resolved "https://registry.npmjs.org/js-md5/-/js-md5-0.7.3.tgz"
-  integrity sha512-ZC41vPSTLKGwIRjqDh8DfXoCrdQIyBgspJVPXHBGu4nZlAEvG3nf+jO9avM9RmLiGakg7vz974ms99nEV0tmTQ==
-
-js-sha1@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.npmjs.org/js-sha1/-/js-sha1-0.6.0.tgz"
-  integrity sha512-01gwBFreYydzmU9BmZxpVk6svJJHrVxEN3IOiGl6VO93bVKYETJ0sIth6DASI6mIFdt7NmfX9UiByRzsYHGU9w==
 
 jsbn@~0.1.0:
   version "0.1.1"
@@ -1120,6 +1105,11 @@ readable-stream@^2.0.6:
     string_decoder "~1.1.1"
     util-deprecate "~1.0.1"
 
+reflect-metadata@^0.1.13:
+  version "0.1.13"
+  resolved "https://registry.yarnpkg.com/reflect-metadata/-/reflect-metadata-0.1.13.tgz#67ae3ca57c972a2aa1642b10fe363fe32d49dc08"
+  integrity sha512-Ts1Y/anZELhSsjMcU605fU9RE4Oi3p5ORujwbIKXfWa+0Zxs510Qrmrce5/Jowq3cHSZSJqBjypxmHarc+vEWg==
+
 request@^2.87.0:
   version "2.88.2"
   resolved "https://registry.yarnpkg.com/request/-/request-2.88.2.tgz#d73c918731cb5a87da047e207234146f664d12b3"
@@ -1226,6 +1216,13 @@ sequelize-pool@^7.1.0:
   version "7.1.0"
   resolved "https://registry.yarnpkg.com/sequelize-pool/-/sequelize-pool-7.1.0.tgz#210b391af4002762f823188fd6ecfc7413020768"
   integrity sha512-G9c0qlIWQSK29pR/5U2JF5dDQeqqHRragoyahj/Nx4KOOQ3CPPfzxnfqFPCSB7x5UgjOgnZ61nSxz+fjDpRlJg==
+
+sequelize-typescript@^2.1.3:
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/sequelize-typescript/-/sequelize-typescript-2.1.3.tgz#94a8d0a4b5739fc917c8d8fa66e1acb5aadc1274"
+  integrity sha512-0mejGAaLywuCoOOLSXCQs2sMBNudU/QtWZkGY5VT2dfTHToXZi5bOxCa3/CukNNk7wJwXnLuIdeHdlqjvVoj1g==
+  dependencies:
+    glob "7.2.0"
 
 sequelize@^6.17.0:
   version "6.17.0"
@@ -1368,11 +1365,6 @@ timers-ext@^0.1.7:
     es5-ext "~0.10.46"
     next-tick "1"
 
-to-uuid@^0.1.3:
-  version "0.1.3"
-  resolved "https://registry.npmjs.org/to-uuid/-/to-uuid-0.1.3.tgz"
-  integrity sha1-YWzzYYeQmRcNcPCGDUab5MO3//s=
-
 toposort-class@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/toposort-class/-/toposort-class-1.0.1.tgz#7ffd1f78c8be28c3ba45cd4e1a3f5ee193bd9988"
@@ -1456,14 +1448,6 @@ util-deprecate@~1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=
-
-uuid-by-string@^3.0.6:
-  version "3.0.6"
-  resolved "https://registry.npmjs.org/uuid-by-string/-/uuid-by-string-3.0.6.tgz"
-  integrity sha512-cxct9G0ImP5wPftzth0FPafFNVHqCNVD+FMwWdWPePATDyLEQApRyiKY3NCaxbjLa6+9H6egHHIBX6IR3IGH4Q==
-  dependencies:
-    js-md5 "^0.7.3"
-    js-sha1 "^0.6.0"
 
 uuid@^3.3.2:
   version "3.4.0"
