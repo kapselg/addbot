@@ -1,32 +1,38 @@
-import {
-  Model,
-  Sequelize,
-  DataTypes,
-  ModelCtor,
-  ModelStatic,
-  InferAttributes,
-  InferCreationAttributes,
-  DestroyOptions,
-  CreationOptional,
-} from "sequelize";
 import { client, rest } from "../../index";
 import { Routes } from "discord-api-types/v9";
 import { javaHash } from "../../utils/uuidHash";
-import { addQuery, findQuery } from "./interfaces";
+import { addQuery, findQuery } from "../config/interfaces";
 import { isAdmin } from "./Admin";
+import { AutoIncrement, Column, DataType, NotNull, PrimaryKey, Table, Model, AllowNull, Not } from "sequelize-typescript";
+import { Col } from "sequelize/types/utils";
 
-export default class Player extends Model<
-  InferAttributes<Player>,
-  InferCreationAttributes<Player>
-> {
-  declare id: CreationOptional<number>;
-  declare dusername: string;
-  declare mcusername: string;
-  declare uuid: string;
-  declare did: string;
-  declare guild: string;
+@Table
+export default class Player extends Model{
+  @PrimaryKey
+  @Column
+  id: number
 
-  
+  @AllowNull(false)
+  @Column
+  dusername: string
+
+  @AllowNull(false)
+  @Column
+  mcusername: string;
+
+  @AllowNull(false)
+  @Column
+  uuid: string;
+
+  @AllowNull(false)
+  @Column
+  did: string;
+
+  @AllowNull(false)
+  @Column
+  guild: string;
+
+
   async getPlayer(options: findQuery): Promise<Player | null> {
     if (options.mcusername) {
       return await Player.findOne({
@@ -46,7 +52,7 @@ export default class Player extends Model<
   
 }
 
-export function initialize(sequelize: Sequelize) {
+/* export function initialize(sequelize: Sequelize) {
   Player.init(
     {
       id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true}, //id
@@ -67,7 +73,7 @@ export function initialize(sequelize: Sequelize) {
     },
     { sequelize, modelName: "player" }
   );
-}
+}*/
 
 export async function addPlayer(options: addQuery): Promise<boolean> {
   //get discord name from api

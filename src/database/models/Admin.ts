@@ -1,11 +1,28 @@
-import { DataTypes, Model, Sequelize } from "sequelize";
-import { sequelize } from "../config/dbconfig";
-import { findQuery } from "./interfaces";
 import Player from "./Player";
 import { javaHash } from "../../utils/uuidHash";
-class Admin extends Model {}
+import { AutoIncrement, Column, NotNull, PrimaryKey, Table, Model, AllowNull } from "sequelize-typescript";
+import { Col } from "sequelize/types/utils";
 
-export function initialize(sequelize: Sequelize) {
+@Table
+export default class Admin extends Model {
+  @PrimaryKey
+  @Column
+  id: number;
+
+  @AllowNull(false)
+  @Column
+  dusername: string;
+  
+  @AllowNull(false)
+  @Column
+  mcusername: string;
+
+  @AllowNull(false)
+  @Column
+  uuid: string;
+}
+
+/*export function initialize(sequelize: Sequelize) {
   Admin.init(
     {
       dusername: { type: DataTypes.STRING, allowNull: false }, //discord username
@@ -26,7 +43,7 @@ export function initialize(sequelize: Sequelize) {
     },
     { sequelize, modelName: "admin" }
   );
-}
+}*/
 
 export async function isAdmin(player: Player) {
   const result = await Admin.findAll({

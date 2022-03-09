@@ -4,7 +4,7 @@ import { InteractionType, Routes } from 'discord-api-types/v9';
 import { CommandInteraction, Interaction, Intents, Collection, Client } from 'discord.js';
 import fs from "fs";
 import * as commandModules from './commands/commands';
-import { initDB } from './database/config/dbconfig';
+import { initDB } from './database/dbconfig';
 import handleKickBan from './events/handleKickBan';
 import { update } from './events/richPresence';
 

@@ -1,29 +1,25 @@
 import crypto from "crypto";
-import { AutoIncrement, BeforeCreate, BeforeUpdate, Column, DataType, Not, NotNull, PrimaryKey, Table } from "sequelize-typescript";
-import { InferAttributes, InferCreationAttributes, Model } from "sequelize/types";
+import { AutoIncrement, BeforeCreate, BeforeUpdate, Column, DataType, Not, NotNull, PrimaryKey, Table, Model, AllowNull } from "sequelize-typescript";
 
 @Table
 export default class Guild extends Model{
-  @Column
   @PrimaryKey
-  @AutoIncrement
-  @NotNull
-  
-  id: string
+  @Column  
+  id: number
 
+  @AllowNull(false)
   @Column
-  @NotNull
   guildId: string
 
+  @AllowNull(false)
   @Column
-  @NotNull
   mcAdress: string;
 
+  @AllowNull(false)
   @Column
-  @NotNull
   apiAdress: string;
 
+  @AllowNull(false)
   @Column
-  @NotNull
   apiKey: string;
 }
